@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.header__logo {
+  width: 90px;
+  height: 80px;
+  margin: 45px auto 0 45px;
+}
+
+.header__line {
+  width: 100%;
+  margin: auto;
+}
+
+.header__linkProp {
+  width: 111px;
+  font-family: "Inter";
+  font-size: 18px;
+  margin-top: 67px;
+  color: black;
+  text-align: right;
+  margin-left: 300px;
+}
+
+.header__linkCont {
+  width: 111px;
+  font-family: "Inter";
+  font-size: 18px;
+  margin-top: 67px;
+  color: black;
+  text-align: right;
+  margin-left: 500px;
+}
