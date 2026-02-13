@@ -1,0 +1,66 @@
+/* Estilos del contenedor principal del carousel */
+.carousel {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+/* Contenedor del carousel con puntos */
+.carousel .react-multi-carousel-list {
+  position: relative;
+}
+
+/* Estilos de las flechas de navegación */
+.carousel .react-multi-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.carousel .react-multi-carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Flecha izquierda */
+.carousel .react-multi-carousel-arrow--left {
+  left: -25px;
+}
+
+/* Flecha derecha */
+.carousel .react-multi-carousel-arrow--right {
+  right: -25px;
+}
+
+/* Estilos responsive */
+@media screen and (max-width: 768px) {
+  .carousel .react-multi-carousel-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel .react-multi-carousel-arrow--left {
+    left: -20px;
+  }
+
+  .carousel .react-multi-carousel-arrow--right {
+    right: -20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .carousel {
+    padding: 20px 0;
+  }
+
+  .carousel .react-multi-carousel-arrow {
+    display: none; /* Ocultar flechas en móvil */
+  }
+}
