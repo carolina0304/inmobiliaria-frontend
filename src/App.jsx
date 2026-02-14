@@ -15,6 +15,8 @@ import "../src/blocks/properties.css";
 
 import PropertyCard from "./components/Main/components/PropertyCard/PropertyCard.jsx";
 
+import Footer from "./components/Footer/Footer.jsx";
+
 function App() {
   return (
     <Router>
@@ -71,6 +73,7 @@ function App() {
 
           <Route path="/contacto" element={<div>Pagina de contacto</div>} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
