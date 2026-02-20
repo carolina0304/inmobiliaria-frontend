@@ -1,2 +1,6 @@
 @import url(./blocks/page.css);
 @import url(./blocks/header.css);
+@import url(./blocks/carousel.css);
+@import url(./blocks/footer.css);
+@import url(./blocks/properties.css);
+@import url(./blocks/property-card.css);
