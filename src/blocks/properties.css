@@ -6,20 +6,42 @@
   padding: 0 20px;
 }
 
-.properties-title {
-  font-size: 24px;
+.properties-header__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 50px;
   font-weight: bold;
   color: #000000;
-  margin: 0;
+  margin: 100px 50px 100px 50px;
 }
 
-.properties-link {
+.properties-header__link {
+  font-family: "Montserrat", sans-serif;
   color: #000000;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 30px;
   transition: opacity 0.3s ease;
 }
 
-.properties-link:hover {
+.properties-header__link:hover {
   opacity: 0.7;
+}
+
+@media screen and (max-width: 1024px) {
+  .properties-header__title {
+    font-size: 30px;
+  }
+  .properties-header__link {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .properties-header__title {
+    margin: auto;
+    font-size: 30px;
+  }
+  .properties-header__link {
+    margin: auto;
+    font-size: 15px;
+  }
 }
