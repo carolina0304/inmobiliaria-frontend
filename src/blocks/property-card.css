@@ -50,6 +50,24 @@
   font-family: "Inter";
 }
 
+.property-card__feature {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* espacio entre icono y texto */
+}
+
+.property-card__icon {
+  font-size: 16px;
+  font-family: "Inter";
+}
+
+.property-card__text {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  font-family: "Inter";
+}
+
 /* Precio de la propiedad */
 /*.property-card__price {
   font-size: 18px;
