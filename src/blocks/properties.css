@@ -12,6 +12,7 @@
   font-weight: bold;
   color: #000000;
   margin: 100px 50px 100px 50px;
+  max-width: 1000px;
 }
 
 .properties-header__link {
@@ -20,6 +21,7 @@
   text-decoration: none;
   font-size: 30px;
   transition: opacity 0.3s ease;
+  max-width: 350px;
 }
 
 .properties-header__link:hover {
