@@ -4,6 +4,7 @@ function PropertyCard({
   image,
   headline,
   description,
+  propertykey,
   bedrooms,
   bathrooms,
   area,
@@ -15,6 +16,7 @@ function PropertyCard({
         <div className="property-card__content">
           <h3 className="property-card__headline">{headline}</h3>
           <p className="property-card__description">{description}</p>
+          <p className="property-card__key">{propertykey}</p>
           <div className="property-card__feature">
             <span className="property-card__icon">🛏️</span>
             <span className="property-card__text">{bedrooms}</span>

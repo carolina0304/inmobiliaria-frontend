@@ -50,6 +50,14 @@
   font-family: "Inter";
 }
 
+.property-card__key {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  font-family: "Inter";
+}
+
 .property-card__feature {
   display: flex;
   align-items: center;
