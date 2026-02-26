@@ -25,6 +25,8 @@ function Main() {
             bedrooms="2"
             bathrooms="1"
             area="90"
+            type="venta" // Agregar esta propiedad
+            price="1,510,000" // Y el precio
           />
           <PropertyCard
             image="https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
@@ -33,6 +35,8 @@ function Main() {
             bedrooms="2"
             bathrooms="1"
             area="100"
+            type="renta" // Agregar esta propiedad
+            price="1,530,000" // Y el precio
           />
           <PropertyCard
             image="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
@@ -41,6 +45,8 @@ function Main() {
             bedrooms="2"
             bathrooms="2"
             area="125"
+            type="renta" // Agregar esta propiedad
+            price="1,540,000" // Y el precio
           />
           <PropertyCard
             image="https://images.unsplash.com/photo-1565182999561-18d7dc61c393?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
@@ -49,6 +55,8 @@ function Main() {
             bedrooms="2"
             bathrooms="2"
             area="120"
+            type="renta" // Agregar esta propiedad
+            price="1,560,000" // Y el precio
           />
         </Carousel>
       </div>

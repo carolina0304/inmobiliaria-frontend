@@ -34,5 +34,3 @@ function PropertyCard({
 }
 
 export default PropertyCard;
-
-<img src={imageRec} alt="Recamara" className="property-card__character" />;
