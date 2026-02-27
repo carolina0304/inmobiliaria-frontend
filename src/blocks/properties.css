@@ -169,6 +169,12 @@
   gap: 25px;
 }
 
+.properties__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 1100px) {
