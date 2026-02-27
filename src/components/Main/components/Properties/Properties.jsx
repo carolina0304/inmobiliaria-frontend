@@ -9,30 +9,64 @@ function Properties() {
 
   const allProperties = [
     {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1549396535-c11d5c55b9df",
-      headline: "Casa Nueva con 4 Recs en Zizana",
+      image:
+        "https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+      headline: "Propiedad 1",
       description: "Hermosa casa en el centro de la ciudad",
-      propertykey: "123333",
-      bedrooms: "4",
-      bathrooms: "3",
-      area: "156",
-      type: "venta",
-      price: "3,250,000",
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6",
-      headline: "Departamento en 3er piso",
-      description: "Apartamento moderno con vista al mar",
-      propertykey: "1233355",
       bedrooms: "2",
       bathrooms: "1",
-      area: "47",
+      area: "90",
       type: "venta",
+      price: "1,510,000",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+      headline: "Propiedad 2",
+      description: "Apartamento moderno con vista al mar",
+      bedrooms: "2",
+      bathrooms: "1",
+      area: "100",
+      type: "renta",
       price: "1,530,000",
     },
+    {
+      image:
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+      headline: "Propiedad 3",
+      description: "Casa familiar con jardín",
+      bedrooms: "2",
+      bathrooms: "2",
+      area: "125",
+      type: "renta",
+      price: "1,540,000",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1565182999561-18d7dc61c393?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+      headline: "Propiedad 4",
+      description: "Loft moderno en el centro",
+      bedrooms: "2",
+      bathrooms: "2",
+      area: "120",
+      type: "renta",
+      price: "1,560,000",
+    },
   ];
+
+  const filteredProperties = allProperties.filter((property) => {
+    const matchesOperation = property.type === operationType;
+
+    const matchesLocation = property.description
+      .toLowerCase()
+      .includes(location.toLowerCase());
+
+    const matchesSearch = property.headline
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return matchesOperation && matchesLocation && matchesSearch;
+  });
 
   return (
     <div className="properties__page">
@@ -49,18 +83,35 @@ function Properties() {
             <div className="properties__filter-group">
               <h4>🏷️ Operación</h4>
               <label>
-                <input type="radio" name="operation" value="venta" checked />
+                <input
+                  type="radio"
+                  name="operation"
+                  value="venta"
+                  checked={operationType === "venta"}
+                  onChange={(e) => setOperationType(e.target.value)}
+                />
                 Venta
               </label>
               <label>
-                <input type="radio" name="operation" value="renta" />
+                <input
+                  type="radio"
+                  name="operation"
+                  value="renta"
+                  checked={operationType === "renta"}
+                  onChange={(e) => setOperationType(e.target.value)}
+                />
                 Renta
               </label>
             </div>
 
             <div className="properties__filter-group">
               <h4>📍 Ubicación</h4>
-              <input type="text" placeholder="Buscar ubicación" />
+              <input
+                type="text"
+                placeholder="Buscar ubicación"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
             </div>
           </div>
         </aside>
@@ -68,7 +119,7 @@ function Properties() {
         <main className="properties__main">
           <div className="properties__header">
             <h2 className="properties__results-count">
-              {allProperties.length} Inmuebles Encontrados
+              {filteredProperties.length} Inmuebles Encontrados
             </h2>
             <div className="properties__view-controls">
               <span>Ordenar por</span>
@@ -83,7 +134,7 @@ function Properties() {
           </div>
 
           <div className="properties__grid">
-            {allProperties.map((property) => (
+            {filteredProperties.map((property) => (
               <PropertyCard
                 key={property.id}
                 image={property.image}
