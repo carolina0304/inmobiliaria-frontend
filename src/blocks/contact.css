@@ -1,0 +1,59 @@
+.contact {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact__container {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.contact__title {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-family: "Inter";
+}
+
+.contact__subtitle {
+  font-family: "Inter";
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact__input,
+.contact__textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: "Montserrat";
+}
+
+.contact__textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.contact__button {
+  padding: 12px;
+  background: #39e6a4;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+  font-family: "Montserrat";
+}
+
+.contact__button:hover {
+  background: #2fcf90;
+}

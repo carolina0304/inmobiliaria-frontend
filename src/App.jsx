@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header.jsx";
 import Main from "./components/Main/Main.jsx"; // Separa tu página principal
 import Properties from "./components/Main/components/Properties/Properties.jsx"; // Nueva página
+import Contact from "./components/Main/components/Form/Contact.jsx";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -27,7 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/propiedades" element={<Properties />} />
-          <Route path="/contacto" element={<div>Pagina de contacto</div>} />
+          <Route path="/contacto" element={<Contact />} />
         </Routes>
         <Footer />
       </div>

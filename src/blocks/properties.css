@@ -43,13 +43,15 @@
   transition: 0.3s;
 }
 
-.properties__search-btn {
+.properties__search-btn.active,
+.properties__key-btn.active {
   background: #39e6a4;
   color: white;
 }
 
+.properties__search-btn:hover,
 .properties__key-btn:hover {
-  background: #ddd;
+  background: #39e6a4;
 }
 
 /* FILTER SECTIONS */

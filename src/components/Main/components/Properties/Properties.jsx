@@ -6,9 +6,12 @@ function Properties() {
   const [operationType, setOperationType] = useState("venta");
   const [location, setLocation] = useState("");
   const [viewMode, setViewMode] = useState("grid");
+  const [searchMode, setSearchMode] = useState("search");
+  const [propertyKeySearch, setPropertyKeySearch] = useState("");
 
   const allProperties = [
     {
+      id: 1,
       image:
         "https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
       headline: "Propiedad 1",
@@ -21,6 +24,7 @@ function Properties() {
       price: "1,510,000",
     },
     {
+      id: 2,
       image:
         "https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
       headline: "Propiedad 2",
@@ -33,6 +37,7 @@ function Properties() {
       price: "1,530,000",
     },
     {
+      id: 3,
       image:
         "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
       headline: "Propiedad 3",
@@ -45,6 +50,7 @@ function Properties() {
       price: "1,540,000",
     },
     {
+      id: 4,
       image:
         "https://images.unsplash.com/photo-1565182999561-18d7dc61c393?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
       headline: "Propiedad 4",
@@ -59,6 +65,14 @@ function Properties() {
   ];
 
   const filteredProperties = allProperties.filter((property) => {
+    // Si estamos en modo CLAVE
+    if (searchMode === "key") {
+      return property.propertykey
+        .toLowerCase()
+        .includes(propertyKeySearch.toLowerCase());
+    }
+
+    // Si estamos en modo BUSQUEDA normal
     const matchesOperation = property.type === operationType;
 
     const matchesLocation = property.description
@@ -77,9 +91,53 @@ function Properties() {
       <div className="properties__container">
         <aside className="properties__filters">
           <div className="properties__search">
-            <button className="properties__search-btn">🔍 Búsqueda</button>
-            <button className="properties__key-btn">🔑 Clave</button>
+            <button
+              className={`properties__search-btn ${
+                searchMode === "search" ? "active" : ""
+              }`}
+              onClick={() => {
+                setSearchMode("search");
+                setSearchTerm("");
+                setLocation("");
+              }}
+            >
+              🔍 Búsqueda
+            </button>
+            <button
+              className={`properties__key-btn ${
+                searchMode === "key" ? "active" : ""
+              }`}
+              onClick={() => {
+                setSearchMode("key");
+                setSearchTerm("");
+                setLocation("");
+              }}
+            >
+              🔑 Clave
+            </button>
           </div>
+
+          {searchMode === "search" ? (
+            <div className="properties__filter-group">
+              <h4>🔎 Buscar propiedad</h4>
+              <input
+                type="text"
+                placeholder="Buscar por nombre..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div className="properties__filter-group">
+              <h4>🔑 Búsqueda por Clave</h4>
+              <input
+                type="text"
+                placeholder="Ej: 123333"
+                value={propertyKeySearch}
+                onChange={(e) => setPropertyKeySearch(e.target.value)}
+              />
+            </div>
+          )}
 
           <div className="properties__filters-section">
             <h3>🔽 Filtros</h3>
@@ -113,8 +171,8 @@ function Properties() {
               <input
                 type="text"
                 placeholder="Buscar ubicación"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
           </div>
