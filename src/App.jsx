@@ -8,6 +8,7 @@ import Header from "./components/Header/Header.jsx";
 import Main from "./components/Main/Main.jsx"; // Separa tu página principal
 import Properties from "./components/Main/components/Properties/Properties.jsx"; // Nueva página
 import Contact from "./components/Main/components/Form/Contact.jsx";
+import ImageBig from "./components/Main/components/Form/Imagebig.jsx";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -21,16 +22,22 @@ import "../src/blocks/properties.css";
 import Footer from "./components/Footer/Footer.jsx";
 
 function App() {
+  const [selectImage, setSelectImage] = useState(null);
+
   return (
     <Router>
       <div className="page">
         <Header />
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/propiedades" element={<Properties />} />
+          <Route path="/" element={<Main onImageClick={setSelectImage} />} />
+          <Route
+            path="/propiedades"
+            element={<Properties onImageClick={setSelectImage} />}
+          />
           <Route path="/contacto" element={<Contact />} />
         </Routes>
         <Footer />
+        <ImageBig image={selectImage} onClose={() => setSelectImage(null)} />
       </div>
     </Router>
   );

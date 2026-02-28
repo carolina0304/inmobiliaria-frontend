@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import { carouselConfig } from "./components/Carousel/carouselConfig.js";
 import PropertyCard from "./components/PropertyCard/PropertyCard.jsx";
 
-function Main() {
+function Main({ onImageClick }) {
   return (
     <section className="properties-section">
       <div className="properties-header">
@@ -20,6 +20,7 @@ function Main() {
         <Carousel {...carouselConfig}>
           <PropertyCard
             image="https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+            onImageClick={onImageClick}
             headline="Propiedad 1"
             description="Hermosa casa en el centro de la ciudad"
             propertykey="123333"
@@ -31,6 +32,7 @@ function Main() {
           />
           <PropertyCard
             image="https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+            onImageClick={onImageClick}
             headline="Propiedad 2"
             description="Apartamento moderno con vista al mar"
             propertykey="1311111"
@@ -42,6 +44,7 @@ function Main() {
           />
           <PropertyCard
             image="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+            onImageClick={onImageClick}
             headline="Propiedad 3"
             description="Casa familiar con jardín"
             propertykey="14111111"
@@ -53,6 +56,7 @@ function Main() {
           />
           <PropertyCard
             image="https://images.unsplash.com/photo-1565182999561-18d7dc61c393?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+            onImageClick={onImageClick}
             headline="Propiedad 4"
             description="Loft moderno en el centro"
             propertykey="152222"
