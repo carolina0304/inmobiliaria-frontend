@@ -17,7 +17,7 @@ function PropertyCard({
           src={image}
           alt={headline}
           className="property-card__image"
-          onClick={() => onImageClick(image)}
+          onClick={() => onImageClick && onImageClick(image)}
           style={{ cursor: "pointer" }}
         />
         <div className="property-card__content">

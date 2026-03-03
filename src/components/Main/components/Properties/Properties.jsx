@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropertyCard from "../PropertyCard/PropertyCard.jsx";
 
-function Properties() {
+function Properties({ onImageClick }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [operationType, setOperationType] = useState("venta");
   const [location, setLocation] = useState("");
@@ -221,6 +221,7 @@ function Properties() {
                 key={property.id}
                 image={property.image}
                 headline={property.headline}
+                onImageClick={onImageClick}
                 description={property.description}
                 propertykey={property.propertykey}
                 bedrooms={property.bedrooms}
