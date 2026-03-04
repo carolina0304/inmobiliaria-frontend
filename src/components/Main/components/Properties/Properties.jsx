@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropertyCard from "../PropertyCard/PropertyCard.jsx";
+import { getProperties } from "../../../../Utils/api.js";
 
 function Properties({ onImageClick }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,7 +10,31 @@ function Properties({ onImageClick }) {
   const [searchMode, setSearchMode] = useState("search");
   const [propertyKeySearch, setPropertyKeySearch] = useState("");
 
-  const allProperties = [
+  // Nuevos estados para la API
+  const [allProperties, setAllProperties] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // useEffect para cargar datos de la API
+  useEffect(() => {
+    const loadProperties = async () => {
+      try {
+        setIsLoading(true);
+        const properties = await getProperties();
+        setAllProperties(properties);
+        setError(null);
+      } catch (err) {
+        setError("Error al cargar las propiedades");
+        console.error("Error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProperties();
+  }, []);
+
+  /*const allProperties = [
     {
       id: 1,
       image:
@@ -62,7 +87,7 @@ function Properties({ onImageClick }) {
       type: "renta",
       price: "1,560,000",
     },
-  ];
+  ];*/
 
   const filteredProperties = allProperties.filter((property) => {
     // Si estamos en modo CLAVE
@@ -85,6 +110,28 @@ function Properties({ onImageClick }) {
 
     return matchesOperation && matchesLocation && matchesSearch;
   });
+
+  // Mostrar loading
+  if (isLoading) {
+    return (
+      <div className="properties__page">
+        <div className="properties__loading">
+          <p>Cargando propiedades...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar error
+  if (error) {
+    return (
+      <div className="properties__page">
+        <div className="properties__error">
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="properties__page">

@@ -1,10 +1,53 @@
 // src/components/Main/Main.jsx
+import React, { useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { carouselConfig } from "./components/Carousel/carouselConfig.js";
 import PropertyCard from "./components/PropertyCard/PropertyCard.jsx";
+import { getProperties } from "../../Utils/api.js";
 
 function Main({ onImageClick }) {
+  // Nuevos estados para la API
+  const [allProperties, setAllProperties] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // useEffect para cargar datos de la API
+  useEffect(() => {
+    const loadProperties = async () => {
+      try {
+        setIsLoading(true);
+        const properties = await getProperties();
+        setAllProperties(properties);
+        setError(null);
+      } catch (err) {
+        setError("Error al cargar las propiedades");
+        console.error("Error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProperties();
+  }, []);
+
+  // Agregar antes del return principal
+  if (isLoading) {
+    return (
+      <section className="properties-section">
+        <div>Cargando propiedades...</div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="properties-section">
+        <div>Error: {error}</div>
+      </section>
+    );
+  }
+
   return (
     <section className="properties-section">
       <div className="properties-header">
@@ -18,54 +61,21 @@ function Main({ onImageClick }) {
 
       <div>
         <Carousel {...carouselConfig}>
-          <PropertyCard
-            image="https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-            onImageClick={onImageClick}
-            headline="Propiedad 1"
-            description="Hermosa casa en el centro de la ciudad"
-            propertykey="123333"
-            bedrooms="2"
-            bathrooms="1"
-            area="90"
-            type="venta" // Agregar esta propiedad
-            price="1,510,000" // Y el precio
-          />
-          <PropertyCard
-            image="https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-            onImageClick={onImageClick}
-            headline="Propiedad 2"
-            description="Apartamento moderno con vista al mar"
-            propertykey="1311111"
-            bedrooms="2"
-            bathrooms="1"
-            area="100"
-            type="renta" // Agregar esta propiedad
-            price="1,530,000" // Y el precio
-          />
-          <PropertyCard
-            image="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-            onImageClick={onImageClick}
-            headline="Propiedad 3"
-            description="Casa familiar con jardín"
-            propertykey="14111111"
-            bedrooms="2"
-            bathrooms="2"
-            area="125"
-            type="renta" // Agregar esta propiedad
-            price="1,540,000" // Y el precio
-          />
-          <PropertyCard
-            image="https://images.unsplash.com/photo-1565182999561-18d7dc61c393?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-            onImageClick={onImageClick}
-            headline="Propiedad 4"
-            description="Loft moderno en el centro"
-            propertykey="152222"
-            bedrooms="2"
-            bathrooms="2"
-            area="120"
-            type="renta" // Agregar esta propiedad
-            price="1,560,000" // Y el precio
-          />
+          {allProperties.map((property) => (
+            <PropertyCard
+              key={property.id}
+              image={property.image}
+              headline={property.headline}
+              onImageClick={onImageClick}
+              description={property.description}
+              propertykey={property.propertykey}
+              bedrooms={property.bedrooms}
+              bathrooms={property.bathrooms}
+              area={property.area}
+              type={property.type}
+              price={property.price}
+            />
+          ))}
         </Carousel>
       </div>
     </section>
