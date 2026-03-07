@@ -21,6 +21,11 @@ function Properties({ onImageClick }) {
       try {
         setIsLoading(true);
         const properties = await getProperties();
+
+        // 🔍 AGREGAR ESTA LÍNEA PARA DEBUGGEAR
+        console.log("Datos de la API:", properties);
+        console.log("Primer elemento:", properties[0]);
+
         setAllProperties(properties);
         setError(null);
       } catch (err) {
@@ -92,13 +97,13 @@ function Properties({ onImageClick }) {
   const filteredProperties = allProperties.filter((property) => {
     // Si estamos en modo CLAVE
     if (searchMode === "key") {
-      return property.propertykey
+      return property.propertyKey
         .toLowerCase()
         .includes(propertyKeySearch.toLowerCase());
     }
-
-    // Si estamos en modo BUSQUEDA normal
-    const matchesOperation = property.type === operationType;
+    // 🔧 ARREGLAR AQUÍ - hacer case-insensitive
+    const matchesOperation =
+      property.type?.toLowerCase() === operationType.toLowerCase();
 
     const matchesLocation = property.description
       .toLowerCase()
@@ -164,28 +169,6 @@ function Properties({ onImageClick }) {
             </button>
           </div>
 
-          {searchMode === "search" ? (
-            <div className="properties__filter-group">
-              <h4>🔎 Buscar propiedad</h4>
-              <input
-                type="text"
-                placeholder="Buscar por nombre..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          ) : (
-            <div className="properties__filter-group">
-              <h4>🔑 Búsqueda por Clave</h4>
-              <input
-                type="text"
-                placeholder="Ej: 123333"
-                value={propertyKeySearch}
-                onChange={(e) => setPropertyKeySearch(e.target.value)}
-              />
-            </div>
-          )}
-
           <div className="properties__filters-section">
             <h3>🔽 Filtros</h3>
 
@@ -212,6 +195,28 @@ function Properties({ onImageClick }) {
                 Renta
               </label>
             </div>
+
+            {searchMode === "search" ? (
+              <div className="properties__filter-group">
+                <h4>🔎 Tipo de propiedad</h4>
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            ) : (
+              <div className="properties__filter-group">
+                <h4>🔑 Búsqueda por Clave</h4>
+                <input
+                  type="text"
+                  placeholder="Ej: 123333"
+                  value={propertyKeySearch}
+                  onChange={(e) => setPropertyKeySearch(e.target.value)}
+                />
+              </div>
+            )}
 
             <div className="properties__filter-group">
               <h4>📍 Ubicación</h4>
@@ -270,7 +275,7 @@ function Properties({ onImageClick }) {
                 headline={property.headline}
                 onImageClick={onImageClick}
                 description={property.description}
-                propertykey={property.propertykey}
+                propertyKey={property.propertyKey}
                 bedrooms={property.bedrooms}
                 bathrooms={property.bathrooms}
                 area={property.area}

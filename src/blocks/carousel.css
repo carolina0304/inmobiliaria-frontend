@@ -1,66 +1,81 @@
-/* Estilos del contenedor principal del carousel */
+/* CONTENEDOR GENERAL */
 .carousel {
   width: 100%;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 40px 0;
-}
-
-/* Contenedor del carousel con puntos */
-.carousel .react-multi-carousel-list {
   position: relative;
 }
 
-/* Estilos de las flechas de navegación */
+/* CONTENEDOR INTERNO */
+.carousel .react-multi-carousel-list {
+  overflow: visible;
+  padding: 0 80px;
+}
+
+/* TRACK DE LAS CARDS */
+.carousel .react-multi-carousel-track {
+  display: flex;
+  align-items: stretch;
+}
+
+/* ITEM DEL CAROUSEL */
+.carousel .react-multi-carousel-item {
+  display: flex;
+  justify-content: center;
+}
+
+/* FLECHAS */
 .carousel .react-multi-carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
   z-index: 10;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .carousel .react-multi-carousel-arrow:hover {
-  background: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  background: #000;
 }
 
-/* Flecha izquierda */
+/* IZQUIERDA */
 .carousel .react-multi-carousel-arrow--left {
-  left: -25px;
+  left: 0;
+  transform: translate(-120%, -50%);
 }
 
-/* Flecha derecha */
+/* DERECHA */
 .carousel .react-multi-carousel-arrow--right {
-  right: -25px;
+  right: 0;
+  transform: translate(120%, -50%);
 }
 
-/* Estilos responsive */
-@media screen and (max-width: 768px) {
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .carousel {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    padding: 20px;
+  }
+
   .carousel .react-multi-carousel-arrow {
     width: 40px;
     height: 40px;
   }
-
-  .carousel .react-multi-carousel-arrow--left {
-    left: -20px;
-  }
-
-  .carousel .react-multi-carousel-arrow--right {
-    right: -20px;
-  }
 }
 
-@media screen and (max-width: 480px) {
-  .carousel {
-    padding: 20px 0;
-  }
-
+@media (max-width: 480px) {
   .carousel .react-multi-carousel-arrow {
-    display: none; /* Ocultar flechas en móvil */
+    display: none;
   }
 }

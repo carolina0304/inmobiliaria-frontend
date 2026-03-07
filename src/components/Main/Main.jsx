@@ -59,7 +59,7 @@ function Main({ onImageClick }) {
         </a>
       </div>
 
-      <div>
+      <div className="carousel">
         <Carousel {...carouselConfig}>
           {allProperties.map((property) => (
             <PropertyCard
@@ -68,7 +68,7 @@ function Main({ onImageClick }) {
               headline={property.headline}
               onImageClick={onImageClick}
               description={property.description}
-              propertykey={property.propertykey}
+              propertyKey={property.propertyKey}
               bedrooms={property.bedrooms}
               bathrooms={property.bathrooms}
               area={property.area}
