@@ -2,7 +2,7 @@ import logo from "../../Images/LogoTerra.jpeg";
 import logolinea from "../../Images/Line.png";
 import { Link, useLocation } from "react-router-dom";
 
-const Header = ({ isLoggedIn, userEmail, onLogout }) => {
+const Header = ({ isLoggedIn, userEmail, onLogout, onShowLogin }) => {
   const location = useLocation();
 
   return (
@@ -20,9 +20,22 @@ const Header = ({ isLoggedIn, userEmail, onLogout }) => {
 
           {/* Solo para administradores */}
           {!isLoggedIn && (
-            <Link to="/login" className="header__linkProp">
-              Iniciar sesión
-            </Link>
+            <button
+              onClick={onShowLogin}
+              className="header__linkProp header__admin-btn"
+            >
+              Admin
+            </button>
+          )}
+
+          {/* Mostrar info del usuario logueado */}
+          {isLoggedIn && (
+            <div className="header__user-info">
+              <span className="header__user-email">👤 {userEmail}</span>
+              <button onClick={onLogout} className="header__logout-btn">
+                Cerrar Sesión
+              </button>
+            </div>
           )}
         </nav>
       </header>

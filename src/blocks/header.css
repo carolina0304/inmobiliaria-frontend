@@ -33,6 +33,44 @@
   text-decoration: none;
 }
 
+.header__admin-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header__admin-btn:hover {
+  text-decoration: underline;
+}
+
+.header__user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__user-email {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.header__logout-btn {
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.header__logout-btn:hover {
+  background: #cc0000;
+}
+
 @media screen and (max-width: 1024px) {
   .header {
     flex-direction: column;

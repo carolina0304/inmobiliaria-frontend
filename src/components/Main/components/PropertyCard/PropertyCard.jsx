@@ -5,6 +5,7 @@ function PropertyCard({
   isAdmin,
   onDelete,
   onEdit,
+  onToggleFeatured,
   image,
   headline,
   onImageClick,
@@ -15,11 +16,25 @@ function PropertyCard({
   area,
   type,
   price,
+  isFeatured = false,
 }) {
   return (
     <div className="property-card">
       <div className="property-card__image-wrapper">
         <span className="property-card__badge">{type}</span>
+
+        {/* Corazón para destacar (solo admin) */}
+        {isAdmin && (
+          <button
+            className={`property-card__heart ${isFeatured ? "featured" : ""}`}
+            onClick={() => onToggleFeatured && onToggleFeatured(property?.id)}
+            title={
+              isFeatured ? "Quitar de destacadas" : "Marcar como destacada"
+            }
+          >
+            {isFeatured ? "❤️" : "🤍"}
+          </button>
+        )}
 
         <img
           src={image}
@@ -47,24 +62,14 @@ function PropertyCard({
         {isAdmin && (
           <div className="admin-controls">
             <button
-              onClick={() => {
-                console.log(
-                  "Botón editar clickeado para propiedad:",
-                  property?.id,
-                );
-                onEdit && onEdit(property?.id);
-              }}
+              onClick={() => onEdit && onEdit(property?.id)}
+              title="Editar propiedad"
             >
               ✏️
             </button>
             <button
-              onClick={() => {
-                console.log(
-                  "Botón eliminar clickeado para propiedad:",
-                  property?.id,
-                );
-                onDelete && onDelete(property?.id);
-              }}
+              onClick={() => onDelete && onDelete(property?.id)}
+              title="Eliminar propiedad"
             >
               ❌
             </button>

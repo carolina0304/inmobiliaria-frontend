@@ -40,6 +40,8 @@ function App() {
 
   const ADMIN_EMAILS = ["terraqro26@gmail.com"]; // Tus emails admin
 
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   // 🔐 FUNCIÓN PARA MANEJAR LOGIN
   const handleLogin = (email, password) => {
     auth
@@ -52,10 +54,12 @@ function App() {
           // Verificar si es admin por email
           const isAdmin = ADMIN_EMAILS.includes(email.toLowerCase());
           setUserRole(isAdmin ? "admin" : "user");
+          setShowLoginModal(false); // Cerrar modal al hacer login exitoso
         }
       })
       .catch((err) => {
         console.error("Error en login:", err);
+        alert("Credenciales incorrectas");
       });
   };
 
@@ -100,6 +104,7 @@ function App() {
           isLoggedIn={isLoggedIn}
           userEmail={userEmail}
           onLogout={handleLogout}
+          onShowLogin={() => setShowLoginModal(true)}
         />
         <Routes>
           <Route path="/" element={<Main onImageClick={setSelectImage} />} />
@@ -108,7 +113,8 @@ function App() {
             element={<Properties onImageClick={setSelectImage} />}
           />
           <Route path="/contacto" element={<Contact />} />
-          {/* 🔐 RUTA DE LOGIN */}
+          {/* 🔐 RUTA DE LOGIN 
+          
           <Route
             path="/login"
             element={
@@ -118,9 +124,14 @@ function App() {
                 <Navigate to="/" />
               )
             }
-          />
+          />*/}
         </Routes>
         <Footer />
+        <Login
+          onLogin={handleLogin}
+          onClose={() => setShowLoginModal(false)}
+          isOpen={showLoginModal}
+        />
         <ImageBig image={selectImage} onClose={() => setSelectImage(null)} />
       </div>
     </Router>

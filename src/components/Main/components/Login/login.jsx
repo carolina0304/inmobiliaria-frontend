@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Login({ onLogin }) {
+function Login({ onLogin, onClose, isOpen }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -9,29 +9,43 @@ function Login({ onLogin }) {
     onLogin(email, password);
   };
 
+  // Si no está abierto, no mostrar nada
+  if (!isOpen) return null;
+
   return (
-    <div className="login">
-      <form onSubmit={handleSubmit} className="login__form">
-        <h2>Iniciar Sesión</h2>
+    <div className="login-overlay" onClick={onClose}>
+      <div className="login-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Botón cerrar */}
+        <button className="login-modal__close" onClick={onClose}>
+          ✕
+        </button>
 
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} className="login__form">
+          <h2 className="login__title">Acceso Administrador</h2>
 
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <input
+            className="login__input"
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit">Iniciar Sesión</button>
-      </form>
+          <input
+            className="login__input"
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button className="login__button" type="submit">
+            Iniciar Sesión
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

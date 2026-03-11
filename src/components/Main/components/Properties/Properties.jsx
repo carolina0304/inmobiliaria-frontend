@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropertyCard from "../PropertyCard/PropertyCard.jsx";
 import { getProperties } from "../../../../Utils/api.js";
 
-function Properties({ onImageClick }) {
+function Properties({ onImageClick, isAdmin, userRole }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [operationType, setOperationType] = useState("venta");
   const [location, setLocation] = useState("");
@@ -15,30 +15,82 @@ function Properties({ onImageClick }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Estados para el modal de agregar/editar
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editingProperty, setEditingProperty] = useState(null);
+
   // useEffect para cargar datos de la API
   useEffect(() => {
-    const loadProperties = async () => {
-      try {
-        setIsLoading(true);
-        const properties = await getProperties();
-
-        // 🔍 AGREGAR ESTA LÍNEA PARA DEBUGGEAR
-        console.log("Datos de la API:", properties);
-        console.log("Primer elemento:", properties[0]);
-
-        setAllProperties(properties);
-        setError(null);
-      } catch (err) {
-        setError("Error al cargar las propiedades");
-        console.error("Error:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     loadProperties();
   }, []);
 
+  const loadProperties = async () => {
+    try {
+      setIsLoading(true);
+      const properties = await getProperties();
+      console.log("Datos de la API:", properties);
+      console.log("Primer elemento:", properties[0]);
+      setAllProperties(properties);
+      setError(null);
+    } catch (err) {
+      setError("Error al cargar las propiedades");
+      console.error("Error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 🔥 NUEVAS FUNCIONES DE ADMIN
+  const handleDeleteProperty = async (propertyId) => {
+    if (
+      window.confirm("¿Estás seguro de que quieres eliminar esta propiedad?")
+    ) {
+      try {
+        await deleteProperty(propertyId);
+        setAllProperties((prev) =>
+          prev.filter((prop) => prop.id !== propertyId),
+        );
+        alert("Propiedad eliminada exitosamente");
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        alert("Error al eliminar la propiedad");
+      }
+    }
+  };
+
+  const handleEditProperty = (propertyId) => {
+    const property = allProperties.find((prop) => prop.id === propertyId);
+    setEditingProperty(property);
+    setShowAddModal(true);
+  };
+
+  const handleToggleFeatured = async (propertyId) => {
+    try {
+      const property = allProperties.find((prop) => prop.id === propertyId);
+      const updatedProperty = {
+        ...property,
+        isFeatured: !property.isFeatured,
+      };
+
+      await updateProperty(propertyId, updatedProperty);
+
+      setAllProperties((prev) =>
+        prev.map((prop) =>
+          prop.id === propertyId
+            ? { ...prop, isFeatured: !prop.isFeatured }
+            : prop,
+        ),
+      );
+    } catch (error) {
+      console.error("Error al actualizar destacada:", error);
+      alert("Error al actualizar la propiedad");
+    }
+  };
+
+  const handleAddProperty = () => {
+    setEditingProperty(null);
+    setShowAddModal(true);
+  };
   /*const allProperties = [
     {
       id: 1,
