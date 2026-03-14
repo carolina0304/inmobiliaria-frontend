@@ -34,11 +34,13 @@ function App() {
   // 🔐 NUEVOS ESTADOS PARA AUTENTICACIÓN
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState(null); // ID del usuario
+  const [userFavorites, setUserFavorites] = useState([]); //  Favoritos
   const [isLoading, setIsLoading] = useState(true);
 
   const [userRole, setUserRole] = useState(null); // 'admin' o 'user'
 
-  const ADMIN_EMAILS = ["terraqro26@gmail.com"]; // Tus emails admin
+  /*const ADMIN_EMAILS = ["terraqro26@gmail.com"]; // Tus emails admin*/
 
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -50,11 +52,16 @@ function App() {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           setIsLoggedIn(true);
-          setUserEmail(email);
+          setUserEmail(data.user.email);
+          setUserId(data.user.id);
+          setUserFavorites(data.user.favorites || []);
           // Verificar si es admin por email
-          const isAdmin = ADMIN_EMAILS.includes(email.toLowerCase());
+          /*const isAdmin = ADMIN_EMAILS.includes(email.toLowerCase());
           setUserRole(isAdmin ? "admin" : "user");
-          setShowLoginModal(false); // Cerrar modal al hacer login exitoso
+          setShowLoginModal(false); // Cerrar modal al hacer login exitoso*/
+          // 🔥 USAR EL CAMPO isAdmin DE MockAPI
+          setUserRole(data.user.isAdmin ? "admin" : "user");
+          setShowLoginModal(false);
         }
       })
       .catch((err) => {
@@ -68,7 +75,14 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setUserEmail("");
+    setUserId(null); //  LIMPIAR ID
+    setUserFavorites([]); //  LIMPIAR FAVORITOS
+    setUserRole(null);
   };
+
+  console.log("Usuario logueado:", userEmail);
+  console.log("Rol del usuario:", userRole);
+  console.log("¿Es admin?:", userRole === "admin");
 
   // 🔐 VERIFICAR TOKEN AL CARGAR LA APP
   useEffect(() => {
@@ -79,6 +93,9 @@ function App() {
         .then((data) => {
           setIsLoggedIn(true);
           setUserEmail(data.email);
+          setUserId(data.id); //CARGAR ID
+          setUserFavorites(data.favorites || []); //CARGAR FAVORITOS
+          setUserRole(data.isAdmin ? "admin" : "user");
         })
         .catch((err) => {
           console.error("Token inválido:", err);
@@ -110,7 +127,16 @@ function App() {
           <Route path="/" element={<Main onImageClick={setSelectImage} />} />
           <Route
             path="/propiedades"
-            element={<Properties onImageClick={setSelectImage} />}
+            element={
+              <Properties
+                onImageClick={setSelectImage}
+                userRole={userRole}
+                userEmail={userEmail}
+                userId={userId} //  PASAR ID
+                userFavorites={userFavorites}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           />
           <Route path="/contacto" element={<Contact />} />
           {/* 🔐 RUTA DE LOGIN 

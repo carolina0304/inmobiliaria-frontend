@@ -1,7 +1,7 @@
 // src/utils/auth.js
 const BASE_URL = "https://699f956c3188b0b1d5365c02.mockapi.io/api/v1/"; // Cambia por tu URL de API
 
-// Usuarios simulados para desarrollo
+/* Usuarios simulados para desarrollo
 const MOCK_USERS = [
   {
     email: "terraqro26@gmail.com",
@@ -9,59 +9,66 @@ const MOCK_USERS = [
     name: "Admin",
     isAdmin: true,
   },
-];
-export const register = (email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
+];*/
+
+// 🔥 FUNCIÓN PRINCIPAL DE LOGIN (usando MockAPI)
+export const login = async (email, password) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users`);
+    const users = await response.json();
+
+    const user = users.find(
+      (u) => u.email === email && u.password === password,
+    );
+
+    if (user) {
+      return {
+        token: `fake-jwt-token-${Date.now()}-${user.id}`,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          isAdmin: user.isAdmin,
+          favorites: user.favorites || [],
+        },
+      };
+    } else {
+      throw new Error("Credenciales incorrectas");
     }
-    return Promise.reject(`Error: ${response.status}`);
-  });
+  } catch (error) {
+    throw new Error("Error de autenticación");
+  }
 };
 
-export const login = (email, password) => {
+// 🔥 FUNCIÓN PARA VERIFICAR TOKEN
+export const checkToken = (token) => {
   return new Promise((resolve, reject) => {
-    // Simular delay de red
-    setTimeout(() => {
-      const user = MOCK_USERS.find(
-        (u) => u.email === email && u.password === password,
-      );
+    try {
+      // Extraer ID del usuario del token
+      const tokenParts = token.split("-");
+      const userId = tokenParts[tokenParts.length - 1];
 
-      if (user) {
-        resolve({
-          token: `fake-jwt-token-${Date.now()}`,
-          user: {
+      // Buscar usuario por ID en MockAPI
+      fetch(`${BASE_URL}/users/${userId}`)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Usuario no encontrado");
+        })
+        .then((user) => {
+          resolve({
             email: user.email,
             name: user.name,
             isAdmin: user.isAdmin,
-          },
+            favorites: user.favorites || [],
+          });
+        })
+        .catch(() => {
+          reject(new Error("Token inválido"));
         });
-      } else {
-        reject(new Error("Credenciales incorrectas"));
-      }
-    }, 500);
-  });
-};
-
-export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
+    } catch (error) {
+      reject(new Error("Token inválido"));
     }
-    return Promise.reject(`Error: ${response.status}`);
   });
 };

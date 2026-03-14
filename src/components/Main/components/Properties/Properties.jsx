@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
 import PropertyCard from "../PropertyCard/PropertyCard.jsx";
-import { getProperties } from "../../../../Utils/api.js";
+import {
+  getProperties,
+  updateProperty,
+  deleteProperty,
+  updateUserFavorites,
+} from "../../../../Utils/api.js";
 
-function Properties({ onImageClick, isAdmin, userRole }) {
+function Properties({
+  onImageClick,
+  userRole,
+  userEmail,
+  userId,
+  userFavorites,
+  isLoggedIn,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [operationType, setOperationType] = useState("venta");
   const [location, setLocation] = useState("");
@@ -18,6 +30,8 @@ function Properties({ onImageClick, isAdmin, userRole }) {
   // Estados para el modal de agregar/editar
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingProperty, setEditingProperty] = useState(null);
+
+  /*const [userFavorites, setUserFavorites] = useState([]);*/
 
   // useEffect para cargar datos de la API
   useEffect(() => {
@@ -62,6 +76,38 @@ function Properties({ onImageClick, isAdmin, userRole }) {
     const property = allProperties.find((prop) => prop.id === propertyId);
     setEditingProperty(property);
     setShowAddModal(true);
+  };
+
+  // 🔥  FUNCIÓN PARA MANEJAR FAVORITOS
+  const handleToggleFavorite = async (propertyId) => {
+    if (!userId) {
+      alert("Debes estar logueado para agregar favoritos");
+      return;
+    }
+
+    try {
+      console.log("🔥 Toggle favorito para propiedad:", propertyId);
+
+      let newFavorites;
+      // Si ya está en favoritos, lo quitamos
+      if (userFavorites.includes(propertyId.toString())) {
+        newFavorites = userFavorites.filter(
+          (id) => id !== propertyId.toString(),
+        );
+      } else {
+        // Si no está, lo agregamos
+        newFavorites = [...userFavorites, propertyId.toString()];
+      }
+
+      // Actualizar en la API
+      await updateUserFavorites(userId, newFavorites);
+
+      // Aquí necesitarías una función para actualizar el estado en App.jsx
+      console.log("✅ Favoritos actualizados en API:", newFavorites);
+    } catch (error) {
+      console.error("Error al actualizar favoritos:", error);
+      alert("Error al actualizar favoritos");
+    }
   };
 
   const handleToggleFeatured = async (propertyId) => {
@@ -153,9 +199,11 @@ function Properties({ onImageClick, isAdmin, userRole }) {
         .toLowerCase()
         .includes(propertyKeySearch.toLowerCase());
     }
-    // 🔧 ARREGLAR AQUÍ - hacer case-insensitive
+    //  Verificar que type sea string antes de usar toLowerCase
     const matchesOperation =
-      property.type?.toLowerCase() === operationType.toLowerCase();
+      typeof property.type === "string"
+        ? property.type.toLowerCase() === operationType.toLowerCase()
+        : false; // Si no es string, no coincide
 
     const matchesLocation = property.description
       .toLowerCase()
@@ -312,6 +360,13 @@ function Properties({ onImageClick, isAdmin, userRole }) {
               </div>
             </div>
           </div>
+          {/* 🔥 BOTONES SOLO PARA ADMIN */}
+          {userRole === "admin" && (
+            <div className="admin-controls">
+              <button className="admin-btn">+ Agregar Propiedad</button>
+              <button className="admin-btn">Gestionar Propiedades</button>
+            </div>
+          )}
 
           <div
             className={
@@ -323,7 +378,8 @@ function Properties({ onImageClick, isAdmin, userRole }) {
             {filteredProperties.map((property) => (
               <PropertyCard
                 key={property.id}
-                image={property.image}
+                property={property}
+                /*image={property.image}
                 headline={property.headline}
                 onImageClick={onImageClick}
                 description={property.description}
@@ -333,6 +389,22 @@ function Properties({ onImageClick, isAdmin, userRole }) {
                 area={property.area}
                 type={property.type}
                 price={property.price}
+                isAdmin={isAdmin}
+                onDelete={() => handleDeleteProperty(property.id)}
+                onEdit={() => handleEditProperty(property.id)}
+                onToggleFeatured={() => handleToggleFeatured(property.id)}
+                isFeatured={property.isFeatured}*/
+                onImageClick={onImageClick}
+                userRole={userRole}
+                user={
+                  isLoggedIn
+                    ? { email: userEmail, favorites: userFavorites }
+                    : null
+                }
+                onToggleFavorite={handleToggleFavorite}
+                onDelete={() => handleDeleteProperty(property.id)}
+                onEdit={() => handleEditProperty(property.id)}
+                onToggleFeatured={() => handleToggleFeatured(property.id)}
               />
             ))}
           </div>

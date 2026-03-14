@@ -18,7 +18,16 @@ function Main({ onImageClick }) {
       try {
         setIsLoading(true);
         const properties = await getProperties();
-        setAllProperties(properties);
+        console.log("Propiedades recibidas:", properties);
+        console.log("Primera propiedad:", properties[0]);
+
+        const featuredProperties = properties.filter(
+          (property) => property.isFeatured === true,
+        );
+        console.log("Propiedades destacadas:", featuredProperties);
+        console.log("Total destacadas:", featuredProperties.length);
+
+        setAllProperties(featuredProperties);
         setError(null);
       } catch (err) {
         setError("Error al cargar las propiedades");
@@ -64,16 +73,17 @@ function Main({ onImageClick }) {
           {allProperties.map((property) => (
             <PropertyCard
               key={property.id}
-              image={property.image}
-              headline={property.headline}
+              property={property}
+              /*image={property.image}
+              headline={property.headline}*/
               onImageClick={onImageClick}
-              description={property.description}
+              /*description={property.description}
               propertyKey={property.propertyKey}
               bedrooms={property.bedrooms}
               bathrooms={property.bathrooms}
               area={property.area}
               type={property.type}
-              price={property.price}
+              price={property.price}*/
             />
           ))}
         </Carousel>
