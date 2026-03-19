@@ -117,10 +117,6 @@ function App() {
     setUserRole(null);
   };
 
-  console.log("Usuario logueado:", userEmail);
-  console.log("Rol del usuario:", userRole);
-  console.log("¿Es admin?:", userRole === "admin");
-
   // 🔐 VERIFICAR TOKEN AL CARGAR LA APP
   useEffect(() => {
     const token = localStorage.getItem("jwt");

@@ -22,24 +22,28 @@ function Login({ onLogin, onClose, isOpen }) {
 
         <form onSubmit={handleSubmit} className="login__form">
           <h2 className="login__title">Acceso Administrador</h2>
+          <p className="login__subtitle">Gestiona tus propiedades</p>
 
-          <input
-            className="login__input"
-            type="email"
-            placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-
-          <input
-            className="login__input"
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="login__group">
+            <input
+              className="login__input"
+              type="email"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="login__group">
+            <input
+              className="login__input"
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
           <button className="login__button" type="submit">
             Iniciar Sesión

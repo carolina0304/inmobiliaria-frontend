@@ -5,6 +5,7 @@ import {
   updateProperty,
   deleteProperty,
   updateUserFavorites,
+  createProperty,
 } from "../../../../Utils/api.js";
 
 function Properties({
@@ -32,7 +33,19 @@ function Properties({
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingProperty, setEditingProperty] = useState(null);
 
-  /*const [userFavorites, setUserFavorites] = useState([]);*/
+  // Estados para el formulario
+  const [formData, setFormData] = useState({
+    headline: "",
+    description: "",
+    propertyKey: "",
+    bedrooms: "",
+    bathrooms: "",
+    area: "",
+    type: "venta",
+    price: "",
+    image: "",
+    isFeatured: false,
+  });
 
   // useEffect para cargar datos de la API
   useEffect(() => {
@@ -55,7 +68,7 @@ function Properties({
     }
   };
 
-  // 🔥 NUEVAS FUNCIONES DE ADMIN
+  // NUEVAS FUNCIONES DE ADMIN
   const handleDeleteProperty = async (propertyId) => {
     if (
       window.confirm("¿Estás seguro de que quieres eliminar esta propiedad?")
@@ -79,29 +92,39 @@ function Properties({
     setShowAddModal(true);
   };
 
-  // 🔥  FUNCIÓN PARA MANEJAR FAVORITOS
+  //  FUNCIÓN PARA MANEJAR FAVORITOS
   const handleToggleFavorite = async (propertyId) => {
+    console.log("🔥 CLICK EN FAVORITO - Iniciando...");
+    console.log("🔥 propertyId recibido:", propertyId);
+    console.log("🔥 userId actual:", userId);
+    console.log("🔥 userFavorites actuales:", userFavorites);
     if (!userId) {
+      console.log("❌ No hay userId - mostrando alerta");
       alert("Debes estar logueado para agregar favoritos");
       return;
     }
 
     try {
-      console.log("🔥 Toggle favorito para propiedad:", propertyId);
+      console.log("Toggle favorito para propiedad:", propertyId);
 
       let newFavorites;
       // Si ya está en favoritos, lo quitamos
       if (userFavorites.includes(propertyId.toString())) {
+        console.log("➖ Quitando de favoritos");
         newFavorites = userFavorites.filter(
           (id) => id !== propertyId.toString(),
         );
       } else {
+        console.log("➕ Agregando a favoritos");
         // Si no está, lo agregamos
         newFavorites = [...userFavorites, propertyId.toString()];
       }
 
+      console.log("🔄 Nuevos favoritos:", newFavorites);
+
       // Actualizar en la API
-      await updateUserFavorites(userId, newFavorites);
+      await onUpdateFavorites(propertyId);
+      console.log("✅ API actualizada exitosamente");
 
       // Aquí necesitarías una función para actualizar el estado en App.jsx
       console.log("✅ Favoritos actualizados en API:", newFavorites);
@@ -138,65 +161,60 @@ function Properties({
     setEditingProperty(null);
     setShowAddModal(true);
   };
-  /*const allProperties = [
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-      headline: "Propiedad 1",
-      description: "Hermosa casa en el centro de la ciudad",
-      propertykey: "123333",
-      bedrooms: "2",
-      bathrooms: "1",
-      area: "90",
+
+  // Función para manejar cambios en el formulario
+  const handleFormChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  // Función para resetear el formulario
+  const resetForm = () => {
+    setFormData({
+      headline: "",
+      description: "",
+      propertyKey: "",
+      bedrooms: "",
+      bathrooms: "",
+      area: "",
       type: "venta",
-      price: "1,510,000",
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-      headline: "Propiedad 2",
-      description: "Apartamento moderno con vista al mar",
-      propertykey: "1311111",
-      bedrooms: "2",
-      bathrooms: "1",
-      area: "100",
-      type: "renta",
-      price: "1,530,000",
-    },
-    {
-      id: 3,
-      image:
-        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-      headline: "Propiedad 3",
-      description: "Casa familiar con jardín",
-      propertykey: "14111111",
-      bedrooms: "2",
-      bathrooms: "2",
-      area: "125",
-      type: "renta",
-      price: "1,540,000",
-    },
-    {
-      id: 4,
-      image:
-        "https://images.unsplash.com/photo-1565182999561-18d7dc61c393?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-      headline: "Propiedad 4",
-      description: "Loft moderno en el centro",
-      propertykey: "152222",
-      bedrooms: "2",
-      bathrooms: "2",
-      area: "120",
-      type: "renta",
-      price: "1,560,000",
-    },
-  ];*/
+      price: "",
+      image: "",
+      isFeatured: false,
+    });
+  };
+
+  // Función para manejar el envío del formulario
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Aquí llamaremos a createProperty con los datos del formulario
+      const newProperty = await createProperty(formData);
+
+      // Actualizar la lista de propiedades
+      setAllProperties((prev) => [...prev, newProperty]);
+
+      // Resetear el formulario
+      resetForm();
+
+      // Cerrar el modal/formulario
+      setShowAddModal(false);
+
+      console.log("Propiedad creada exitosamente:", newProperty);
+    } catch (error) {
+      console.error("Error al crear la propiedad:", error);
+      // Aquí podrías mostrar un mensaje de error al usuario
+    }
+  };
 
   const filteredProperties = allProperties.filter((property) => {
     // Si estamos en modo CLAVE
     if (searchMode === "key") {
-      // 🔥 VERIFICAR QUE propertyKey EXISTE Y ES STRING
+      // VERIFICAR QUE propertyKey EXISTE Y ES STRING
       return (
         property.propertyKey &&
         typeof property.propertyKey === "string" &&
@@ -370,6 +388,7 @@ function Properties({
               </div>
             </div>
           </div>
+
           {/* 🔥 BOTONES SOLO PARA ADMIN */}
           {userRole === "admin" && (
             <div className="admin-controls">
@@ -442,7 +461,133 @@ function Properties({
                     ✕
                   </button>
                   {/* Aquí irá tu formulario para agregar/editar propiedades */}
-                  <p>Formulario de propiedad (por implementar)</p>
+                  <form onSubmit={handleFormSubmit} className="property-form">
+                    <div className="form-group">
+                      <label>Título:</label>
+                      <input
+                        type="text"
+                        name="headline"
+                        value={formData.headline}
+                        onChange={handleFormChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Descripción:</label>
+                      <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleFormChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Clave de Propiedad:</label>
+                      <input
+                        type="text"
+                        name="propertyKey"
+                        value={formData.propertyKey}
+                        onChange={handleFormChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label>Habitaciones:</label>
+                        <input
+                          type="number"
+                          name="bedrooms"
+                          value={formData.bedrooms}
+                          onChange={handleFormChange}
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label>Baños:</label>
+                        <input
+                          type="number"
+                          name="bathrooms"
+                          value={formData.bathrooms}
+                          onChange={handleFormChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Área (m²):</label>
+                      <input
+                        type="number"
+                        name="area"
+                        value={formData.area}
+                        onChange={handleFormChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Tipo:</label>
+                      <select
+                        name="type"
+                        value={formData.type}
+                        onChange={handleFormChange}
+                      >
+                        <option value="venta">Venta</option>
+                        <option value="renta">Renta</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Precio:</label>
+                      <input
+                        type="number"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleFormChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>URL de Imagen:</label>
+                      <input
+                        type="url"
+                        name="image"
+                        value={formData.image}
+                        onChange={handleFormChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>
+                        <input
+                          type="checkbox"
+                          name="isFeatured"
+                          checked={formData.isFeatured}
+                          onChange={handleFormChange}
+                        />
+                        Propiedad Destacada
+                      </label>
+                    </div>
+
+                    <div className="form-buttons">
+                      <button type="submit" className="btn-primary">
+                        {editingProperty ? "Actualizar" : "Crear"} Propiedad
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={() => setShowAddModal(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             )}

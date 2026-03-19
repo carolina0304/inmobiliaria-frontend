@@ -57,3 +57,39 @@
 .contact__button:hover {
   background: #2fcf90;
 }
+
+/* OVERLAY */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* MODAL */
+.login-modal {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

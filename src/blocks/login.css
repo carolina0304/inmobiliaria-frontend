@@ -1,14 +1,13 @@
 .login-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .login-modal {
@@ -22,105 +21,112 @@
 
 .login-modal__close {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 15px;
+  right: 18px;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 22px;
   cursor: pointer;
-  color: #666;
+  color: #888;
 }
 
 .login-modal__close:hover {
   color: #000;
 }
 
+/* FORM */
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* TITULO */
 .login__title {
-  font-family: "Inter";
-  font-weight: 900;
   font-size: 24px;
-  margin: 60px 461px 0 461px;
-  color: black;
+  font-weight: 700;
   text-align: center;
+  margin: 0;
+  font-family: "Montserrat";
 }
 
-.login__fieldset {
-  max-width: 358px;
-  border: none;
-  margin: 0 auto;
+/* SUBTITULO */
+.login__subtitle {
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: "Montserrat";
 }
 
-.login__label {
-  width: 358px;
-  height: 28px;
-  border-width: 1px;
+/* INPUT GROUP */
+.login__group {
+  display: flex;
+  flex-direction: column;
 }
 
+/* INPUT */
 .login__input {
-  width: 357px;
-  height: 27px;
-
-  margin: 0 auto 0 24px;
-  font-family: "Inter";
-  font-weight: 400;
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
   font-size: 14px;
-
-  background: black;
-  border: none;
-  color: white;
-
-  border-bottom: 2px solid #cccccc;
-  padding-top: 30px;
+  transition: 0.3s;
+  margin: 0;
+  font-family: "Montserrat";
 }
 
+.login__input:focus {
+  border-color: #00a86b;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 168, 107, 0.1);
+}
+
+/* BOTÓN */
 .login__button {
-  width: 358px;
-  height: 50px;
-  border-radius: 2px;
-  border-width: 1px;
-  font-family: "Inter";
-  font-weight: 400;
-  font-size: 18px;
-  text-align: center;
-  color: black;
-  margin: 216px auto 0 24px;
+  margin: 20px 0 0 0;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #00a86b;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s;
+  font-family: "Montserrat";
 }
 
-.login__link {
-  color: #fff;
-  margin: auto;
-  margin: 15px 15px 400px 80px;
-
-  font-family: "Inter";
-  font-weight: 400;
-  font-size: 14px;
-  text-align: center;
+.login__button:hover {
+  background: #008f5a;
+  transform: translateY(-2px);
 }
 
+/* RESPONSIVE */
 @media screen and (max-width: 1024px) {
+  .login-modal {
+    max-width: 320px;
+  }
 }
 
 @media screen and (max-width: 544px) {
-  .login__buttonlogin {
-    width: 260px;
-    margin: 40px auto;
+  .login-modal {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .login__title {
+    font-size: 20px;
   }
 
   .login__input {
-    width: 260px;
-    margin: auto;
-    padding-top: 20px;
+    font-size: 13px;
+    padding: 12px;
   }
-  .login__link {
-    width: 260px;
-    margin: auto;
-  }
-  .login__title {
-    margin: 0;
-    padding-top: 30px;
-  }
-  .login__form {
-    margin: 0;
+
+  .login__button {
+    font-size: 14px;
+    padding: 12px;
   }
 }
