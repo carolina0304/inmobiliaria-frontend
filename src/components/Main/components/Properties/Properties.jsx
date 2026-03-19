@@ -14,6 +14,7 @@ function Properties({
   userId,
   userFavorites,
   isLoggedIn,
+  onUpdateFavorites,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [operationType, setOperationType] = useState("venta");
@@ -195,23 +196,32 @@ function Properties({
   const filteredProperties = allProperties.filter((property) => {
     // Si estamos en modo CLAVE
     if (searchMode === "key") {
-      return property.propertyKey
-        .toLowerCase()
-        .includes(propertyKeySearch.toLowerCase());
+      // 🔥 VERIFICAR QUE propertyKey EXISTE Y ES STRING
+      return (
+        property.propertyKey &&
+        typeof property.propertyKey === "string" &&
+        property.propertyKey
+          .toLowerCase()
+          .includes(propertyKeySearch.toLowerCase())
+      );
     }
     //  Verificar que type sea string antes de usar toLowerCase
     const matchesOperation =
-      typeof property.type === "string"
+      property.type && typeof property.type === "string"
         ? property.type.toLowerCase() === operationType.toLowerCase()
-        : false; // Si no es string, no coincide
+        : false;
 
-    const matchesLocation = property.description
-      .toLowerCase()
-      .includes(location.toLowerCase());
+    // VERIFICAR QUE description EXISTE
+    const matchesLocation =
+      property.description && typeof property.description === "string"
+        ? property.description.toLowerCase().includes(location.toLowerCase())
+        : false;
 
-    const matchesSearch = property.headline
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    // VERIFICAR QUE headline EXISTE
+    const matchesSearch =
+      property.headline && typeof property.headline === "string"
+        ? property.headline.toLowerCase().includes(searchTerm.toLowerCase())
+        : false;
 
     return matchesOperation && matchesLocation && matchesSearch;
   });
@@ -363,8 +373,10 @@ function Properties({
           {/* 🔥 BOTONES SOLO PARA ADMIN */}
           {userRole === "admin" && (
             <div className="admin-controls">
-              <button className="admin-btn">+ Agregar Propiedad</button>
-              <button className="admin-btn">Gestionar Propiedades</button>
+              <button className="admin-btn" onClick={handleAddProperty}>
+                + Agregar Propiedad
+              </button>
+              {/*<button className="admin-btn">Gestionar Propiedades</button>*/}
             </div>
           )}
 
@@ -407,6 +419,33 @@ function Properties({
                 onToggleFeatured={() => handleToggleFeatured(property.id)}
               />
             ))}
+
+            {/* 🔥 MODAL PARA AGREGAR/EDITAR PROPIEDADES */}
+            {showAddModal && (
+              <div
+                className="modal-overlay"
+                onClick={() => setShowAddModal(false)}
+              >
+                <div
+                  className="modal-content"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <h3>
+                    {editingProperty
+                      ? "Editar Propiedad"
+                      : "Agregar Nueva Propiedad"}
+                  </h3>
+                  <button
+                    className="modal-close"
+                    onClick={() => setShowAddModal(false)}
+                  >
+                    ✕
+                  </button>
+                  {/* Aquí irá tu formulario para agregar/editar propiedades */}
+                  <p>Formulario de propiedad (por implementar)</p>
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>

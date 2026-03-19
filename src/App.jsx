@@ -70,6 +70,43 @@ function App() {
       });
   };
 
+  // 🔥 FUNCIÓN PARA ACTUALIZAR FAVORITOS
+  const handleUpdateFavorites = async (propertyId) => {
+    if (!userId) {
+      alert("Debes estar logueado para agregar favoritos");
+      return;
+    }
+
+    try {
+      console.log("🔥 Actualizando favorito para propiedad:", propertyId);
+
+      let newFavorites;
+      const propertyIdString = propertyId.toString();
+
+      // Verificar si ya está en favoritos
+      if (userFavorites.includes(propertyIdString)) {
+        // Si está, lo quitamos
+        newFavorites = userFavorites.filter((id) => id !== propertyIdString);
+        console.log("❌ Quitando de favoritos");
+      } else {
+        // Si no está, lo agregamos
+        newFavorites = [...userFavorites, propertyIdString];
+        console.log("✅ Agregando a favoritos");
+      }
+
+      // Actualizar en la API (MockAPI)
+      await auth.updateUserFavorites(userId, newFavorites);
+
+      // Actualizar estado local
+      setUserFavorites(newFavorites);
+
+      console.log("✅ Favoritos actualizados:", newFavorites);
+    } catch (error) {
+      console.error("Error al actualizar favoritos:", error);
+      alert("Error al actualizar favoritos. Inténtalo de nuevo.");
+    }
+  };
+
   // 🔐 FUNCIÓN PARA MANEJAR LOGOUT
   const handleLogout = () => {
     localStorage.removeItem("jwt");
@@ -91,11 +128,12 @@ function App() {
       auth
         .checkToken(token)
         .then((data) => {
+          console.log("🔍 Datos del checkToken:", data);
           setIsLoggedIn(true);
           setUserEmail(data.email);
           setUserId(data.id); //CARGAR ID
           setUserFavorites(data.favorites || []); //CARGAR FAVORITOS
-          setUserRole(data.isAdmin ? "admin" : "user");
+          setUserRole(data.isAdmin ? "admin" : "user"); // 🔥 SIN .user
         })
         .catch((err) => {
           console.error("Token inválido:", err);
@@ -134,6 +172,7 @@ function App() {
                 userEmail={userEmail}
                 userId={userId} //  PASAR ID
                 userFavorites={userFavorites}
+                onUpdateFavorites={handleUpdateFavorites}
                 isLoggedIn={isLoggedIn}
               />
             }

@@ -58,6 +58,7 @@ export const checkToken = (token) => {
         })
         .then((user) => {
           resolve({
+            id: user.id,
             email: user.email,
             name: user.name,
             isAdmin: user.isAdmin,
@@ -71,4 +72,34 @@ export const checkToken = (token) => {
       reject(new Error("Token inválido"));
     }
   });
+};
+
+// 🔥 FUNCIÓN PARA ACTUALIZAR FAVORITOS DEL USUARIO
+export const updateUserFavorites = async (userId, newFavorites) => {
+  try {
+    console.log("🔄 Actualizando favoritos en MockAPI para usuario:", userId);
+    console.log("📝 Nuevos favoritos:", newFavorites);
+
+    const response = await fetch(`${BASE_URL}/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        favorites: newFavorites,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al actualizar favoritos en la API");
+    }
+
+    const updatedUser = await response.json();
+    console.log("✅ Favoritos actualizados en MockAPI:", updatedUser.favorites);
+
+    return updatedUser;
+  } catch (error) {
+    console.error("❌ Error al actualizar favoritos:", error);
+    throw error;
+  }
 };
