@@ -89,6 +89,7 @@ function Properties({
   const handleEditProperty = (propertyId) => {
     const property = allProperties.find((prop) => prop.id === propertyId);
     setEditingProperty(property);
+    setFormData(property);
     setShowAddModal(true);
   };
 
@@ -174,16 +175,16 @@ function Properties({
   // Función para resetear el formulario
   const resetForm = () => {
     setFormData({
-      headline: "",
-      description: "",
-      propertyKey: "",
-      bedrooms: "",
-      bathrooms: "",
-      area: "",
-      type: "venta",
-      price: "",
-      image: "",
-      isFeatured: false,
+      headline: editingProperty?.headline || "",
+      description: editingProperty?.description || "",
+      propertyKey: editingProperty?.propertyKey || "",
+      bedrooms: editingProperty?.bedrooms || "",
+      bathrooms: editingProperty?.bathrooms || "",
+      area: editingProperty?.area || "",
+      type: editingProperty?.type || "venta",
+      price: editingProperty?.price || "",
+      image: editingProperty?.image || "",
+      isFeatured: editingProperty?.isFeatured || false,
     });
   };
 

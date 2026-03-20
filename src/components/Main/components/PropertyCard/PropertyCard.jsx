@@ -35,6 +35,26 @@ function PropertyCard({
   // verificar si la propiedad está en favoritos del usuario
   const isFavorite = user?.favorites?.includes(property.id) || false;
 
+  const handleEditProperty = (propertyId) => {
+    const property = allProperties.find((prop) => prop.id === propertyId);
+    setEditingProperty(property);
+
+    setFormData({
+      headline: property.headline,
+      description: property.description,
+      propertyKey: property.propertyKey,
+      bedrooms: property.bedrooms,
+      bathrooms: property.bathrooms,
+      area: property.area,
+      type: property.type,
+      price: property.price,
+      image: property.image,
+      isFeatured: property.isFeatured,
+    });
+
+    setShowAddModal(true);
+  };
+
   return (
     <div className="property-card">
       <div className="property-card__image-wrapper">
