@@ -361,9 +361,24 @@ function Properties({
 
         <main className="properties__main">
           <div className="properties__header">
-            <h2 className="properties__results-count">
-              {filteredProperties.length} Inmuebles Encontrados
+            <h2
+              className="properties__results-count"
+              data-count={filteredProperties.length}
+            >
+              Inmuebles Encontrados
             </h2>
+            {/* 🔥 BOTONES SOLO PARA ADMIN */}
+            {userRole === "admin" && (
+              <div className="properties__admin-controls">
+                <button
+                  className="properties__admin-btn"
+                  onClick={handleAddProperty}
+                >
+                  + Agregar Propiedad
+                </button>
+                {/*<button className="admin-btn">Gestionar Propiedades</button>*/}
+              </div>
+            )}
             <div className="properties__view-controls">
               <span>Ordenar por</span>
               <select>
@@ -389,16 +404,6 @@ function Properties({
               </div>
             </div>
           </div>
-
-          {/* 🔥 BOTONES SOLO PARA ADMIN */}
-          {userRole === "admin" && (
-            <div className="admin-controls">
-              <button className="admin-btn" onClick={handleAddProperty}>
-                + Agregar Propiedad
-              </button>
-              {/*<button className="admin-btn">Gestionar Propiedades</button>*/}
-            </div>
-          )}
 
           <div
             className={
@@ -443,11 +448,11 @@ function Properties({
             {/* 🔥 MODAL PARA AGREGAR/EDITAR PROPIEDADES */}
             {showAddModal && (
               <div
-                className="modal-overlay"
+                className="properties__modal-overlay"
                 onClick={() => setShowAddModal(false)}
               >
                 <div
-                  className="modal-content"
+                  className="properties__modal-content"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <h3>
@@ -456,14 +461,14 @@ function Properties({
                       : "Agregar Nueva Propiedad"}
                   </h3>
                   <button
-                    className="modal-close"
+                    className="properties__modal-close"
                     onClick={() => setShowAddModal(false)}
                   >
                     ✕
                   </button>
                   {/* Aquí irá tu formulario para agregar/editar propiedades */}
                   <form onSubmit={handleFormSubmit} className="property-form">
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>Título:</label>
                       <input
                         type="text"
@@ -474,7 +479,7 @@ function Properties({
                       />
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>Descripción:</label>
                       <textarea
                         name="description"
@@ -484,7 +489,7 @@ function Properties({
                       />
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>Clave de Propiedad:</label>
                       <input
                         type="text"
@@ -495,8 +500,8 @@ function Properties({
                       />
                     </div>
 
-                    <div className="form-row">
-                      <div className="form-group">
+                    <div className="properties__form-row">
+                      <div className="properties__form-group">
                         <label>Habitaciones:</label>
                         <input
                           type="number"
@@ -507,7 +512,7 @@ function Properties({
                         />
                       </div>
 
-                      <div className="form-group">
+                      <div className="properties__form-group">
                         <label>Baños:</label>
                         <input
                           type="number"
@@ -519,7 +524,7 @@ function Properties({
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>Área (m²):</label>
                       <input
                         type="number"
@@ -530,7 +535,7 @@ function Properties({
                       />
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>Tipo:</label>
                       <select
                         name="type"
@@ -542,7 +547,7 @@ function Properties({
                       </select>
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>Precio:</label>
                       <input
                         type="number"
@@ -553,7 +558,7 @@ function Properties({
                       />
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>URL de Imagen:</label>
                       <input
                         type="url"
@@ -564,7 +569,7 @@ function Properties({
                       />
                     </div>
 
-                    <div className="form-group">
+                    <div className="properties__form-group">
                       <label>
                         <input
                           type="checkbox"
@@ -576,13 +581,13 @@ function Properties({
                       </label>
                     </div>
 
-                    <div className="form-buttons">
-                      <button type="submit" className="btn-primary">
+                    <div className="properties__form-buttons">
+                      <button type="submit" className="properties__btn-primary">
                         {editingProperty ? "Actualizar" : "Crear"} Propiedad
                       </button>
                       <button
                         type="button"
-                        className="btn-secondary"
+                        className="properties__btn-secondary"
                         onClick={() => setShowAddModal(false)}
                       >
                         Cancelar
