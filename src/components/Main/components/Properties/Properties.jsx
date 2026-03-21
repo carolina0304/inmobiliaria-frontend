@@ -193,16 +193,16 @@ function Properties({
   // Función para resetear el formulario
   const resetForm = () => {
     setFormData({
-      headline: editingProperty?.headline || "",
-      description: editingProperty?.description || "",
-      propertyKey: editingProperty?.propertyKey || "",
-      bedrooms: editingProperty?.bedrooms || "",
-      bathrooms: editingProperty?.bathrooms || "",
-      area: editingProperty?.area || "",
-      type: editingProperty?.type || "venta",
-      price: editingProperty?.price || "",
-      image: editingProperty?.image || "",
-      isFeatured: editingProperty?.isFeatured || false,
+      headline: "",
+      description: "",
+      propertyKey: "",
+      bedrooms: "",
+      bathrooms: "",
+      area: "",
+      type: "venta",
+      price: "",
+      image: "",
+      isFeatured: false,
     });
   };
 
@@ -211,22 +211,44 @@ function Properties({
     e.preventDefault();
 
     try {
-      // Aquí llamaremos a createProperty con los datos del formulario
-      const newProperty = await createProperty(formData);
+      if (editingProperty) {
+        // 🔥 MODO EDICIÓN - Actualizar propiedad existente
+        console.log("🔄 Editando propiedad:", editingProperty.id);
 
-      // Actualizar la lista de propiedades
-      setAllProperties((prev) => [...prev, newProperty]);
+        const updatedProperty = await updateProperty(
+          editingProperty.id,
+          formData,
+        );
 
-      // Resetear el formulario
+        // Actualizar la propiedad en la lista
+        setAllProperties((prev) =>
+          prev.map((prop) =>
+            prop.id === editingProperty.id ? updatedProperty : prop,
+          ),
+        );
+
+        console.log("✅ Propiedad actualizada exitosamente:", updatedProperty);
+        alert("Propiedad actualizada exitosamente");
+      } else {
+        // 🔥 MODO CREACIÓN - Crear nueva propiedad
+        console.log("➕ Creando nueva propiedad");
+
+        const newProperty = await createProperty(formData);
+
+        // Agregar la nueva propiedad a la lista
+        setAllProperties((prev) => [...prev, newProperty]);
+
+        console.log("✅ Propiedad creada exitosamente:", newProperty);
+        alert("Propiedad creada exitosamente");
+      }
+
+      // Resetear el formulario y cerrar modal
       resetForm();
-
-      // Cerrar el modal/formulario
       setShowAddModal(false);
-
-      console.log("Propiedad creada exitosamente:", newProperty);
+      setEditingProperty(null); // 🔥 Limpiar el estado de edición
     } catch (error) {
-      console.error("Error al crear la propiedad:", error);
-      // Aquí podrías mostrar un mensaje de error al usuario
+      console.error("Error al procesar la propiedad:", error);
+      alert("Error al procesar la propiedad. Inténtalo de nuevo.");
     }
   };
 
