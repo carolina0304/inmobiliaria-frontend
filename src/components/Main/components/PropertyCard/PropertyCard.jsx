@@ -99,7 +99,12 @@ function PropertyCard({
           src={property.image}
           alt={property.headline}
           className="property-card__image"
-          onClick={() => onImageClick && onImageClick(property.image)}
+          onClick={() => {
+            console.log("🖼️ Click detectado en imagen");
+            console.log("🖼️ onImageClick existe:", !!onImageClick);
+            console.log("🖼️ Property:", property);
+            onImageClick && onImageClick(property);
+          }}
         />
       </div>
 

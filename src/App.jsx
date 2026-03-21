@@ -193,7 +193,7 @@ function App() {
           onClose={() => setShowLoginModal(false)}
           isOpen={showLoginModal}
         />
-        <ImageBig image={selectImage} onClose={() => setSelectImage(null)} />
+        <ImageBig property={selectImage} onClose={() => setSelectImage(null)} />
       </div>
     </Router>
   );

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropertyCard from "../PropertyCard/PropertyCard.jsx";
+
+import ImageBig from "../Form/Imagebig.jsx";
+
 import {
   getProperties,
   updateProperty,
@@ -17,6 +20,9 @@ function Properties({
   isLoggedIn,
   onUpdateFavorites,
 }) {
+  const [selectedImage, setSelectedImage] = useState(null);
+  console.log("🔍 Properties - selectedImage actual:", selectedImage);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [operationType, setOperationType] = useState("venta");
   const [location, setLocation] = useState("");
@@ -66,6 +72,18 @@ function Properties({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Función para manejar el click en imagen
+  const handleImageClick = (property) => {
+    console.log("🔍 Properties - handleImageClick ejecutado con:", property);
+    setSelectedImage(property);
+    console.log("🔍 Properties - selectedImage actualizado a:", property);
+  };
+
+  // Función para cerrar el modal
+  const handleCloseImage = () => {
+    setSelectedImage(null);
   };
 
   // NUEVAS FUNCIONES DE ADMIN
@@ -431,7 +449,7 @@ function Properties({
                 onEdit={() => handleEditProperty(property.id)}
                 onToggleFeatured={() => handleToggleFeatured(property.id)}
                 isFeatured={property.isFeatured}*/
-                onImageClick={onImageClick}
+                onImageClick={handleImageClick}
                 userRole={userRole}
                 user={
                   isLoggedIn
@@ -600,6 +618,9 @@ function Properties({
           </div>
         </main>
       </div>
+      {selectedImage && (
+        <ImageBig property={selectedImage} onClose={handleCloseImage} />
+      )}
     </div>
   );
 }
