@@ -1,9 +1,14 @@
 import emailjs from "@emailjs/browser";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../../blocks/contact.css";
 
 function Contact() {
+  // Inicializar EmailJS cuando el componente se monta
+  //useEffect(() => {
+  //emailjs.init("ir3tuKUrVQzq3rox"); // Tu Public Key
+  //}, []);
+
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -21,6 +26,7 @@ function Contact() {
       [name]: value,
     }));
   };
+  console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +35,7 @@ function Contact() {
     try {
       const result = await emailjs.send(
         "service_n3cokds", // Service ID
-        "template_caaq97k", // Template ID
+        "template_caao97k", // Template ID
         {
           name: formData.nombre, // Para {{name}} en el template
           email: formData.email, // Para {{email}} en el template
@@ -37,7 +43,7 @@ function Contact() {
           message: formData.mensaje, // Para {{message}} en el template
           to_email: "terraqro26@gmail.com", // Agregar email destino
         },
-        "ir3tuKUrVQzq3rox", // Public Key
+        "ir3tuKUrVQizq3rox",
       );
 
       console.log("Email enviado:", result.text);
