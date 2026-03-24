@@ -103,3 +103,60 @@ export const updateUserFavorites = async (userId, newFavorites) => {
     throw error;
   }
 };
+
+// Función para registrar un nuevo usuario
+// Función para registrar un nuevo usuario
+export const registerUser = async (email, password) => {
+  try {
+    // Verificar si el usuario ya existe
+    const existingUsers = await getUsers();
+    const userExists = existingUsers.find((user) => user.email === email);
+
+    if (userExists) {
+      throw new Error("El usuario ya existe");
+    }
+
+    // Crear nuevo usuario
+    const newUser = {
+      email: email,
+      password: password,
+      name: email.split("@")[0], // Usar parte del email como nombre
+      isAdmin: false, // Por defecto no es admin
+      favorites: [], // Array vacío de favoritos
+      createdAt: new Date().toISOString(),
+    };
+
+    // Guardar en MockAPI
+    const response = await fetch(`${BASE_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al crear el usuario");
+    }
+
+    const createdUser = await response.json();
+    return createdUser;
+  } catch (error) {
+    console.error("Error en registerUser:", error);
+    throw error;
+  }
+};
+
+export const getUsers = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/users`);
+    if (!response.ok) {
+      throw new Error("Error al obtener usuarios");
+    }
+    const users = await response.json();
+    return users;
+  } catch (error) {
+    console.error("Error en getUsers:", error);
+    throw error;
+  }
+};

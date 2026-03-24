@@ -1,7 +1,17 @@
 import React from "react";
+import { sendEmail } from "../../../../Utils/EmailApi.js";
 import "../../../../blocks/contact.css";
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: "",
+    telefono: "",
+    mensaje: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
   return (
     <section className="contact">
       <div className="contact__container">

@@ -24,7 +24,7 @@ const Header = ({ isLoggedIn, userEmail, userRole, onLogout, onShowLogin }) => {
               onClick={onShowLogin}
               className="header__linkProp header__admin-btn"
             >
-              Admin
+              Iniciar Sesion
             </button>
           )}
 
@@ -40,6 +40,7 @@ const Header = ({ isLoggedIn, userEmail, userRole, onLogout, onShowLogin }) => {
               <button onClick={onLogout} className="header__logout-btn">
                 Cerrar Sesión
               </button>
+              <span></span>
             </div>
           )}
         </nav>

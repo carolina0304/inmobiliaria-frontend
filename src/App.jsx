@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import * as auth from "../src/Utils/auth.js"; // Tu archivo auth.js
+import { registerUser } from "../src/Utils/auth.js";
 import Login from "../src/components/Main/components/Login/login.jsx"; // Tu componente Login
 
 import Header from "./components/Header/Header.jsx";
@@ -43,6 +44,24 @@ function App() {
   /*const ADMIN_EMAILS = ["terraqro26@gmail.com"]; // Tus emails admin*/
 
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleRegister = async (email, password) => {
+    try {
+      const newUser = await registerUser(email, password);
+
+      // Automáticamente hacer login después del registro
+      setIsLoggedIn(true);
+      setUserRole(newUser.role || "user");
+      setUserEmail(newUser.email);
+      setUserId(newUser.id);
+      setUserFavorites(newUser.favorites || []);
+
+      setShowLoginModal(false); // 🔥 Era setShowLogin, ahora es setShowLoginModal
+      alert("¡Cuenta creada exitosamente! Ya estás logueado.");
+    } catch (error) {
+      alert(error.message || "Error al crear la cuenta");
+    }
+  };
 
   // 🔐 FUNCIÓN PARA MANEJAR LOGIN
   const handleLogin = (email, password) => {
@@ -190,6 +209,7 @@ function App() {
         <Footer />
         <Login
           onLogin={handleLogin}
+          onRegister={handleRegister}
           onClose={() => setShowLoginModal(false)}
           isOpen={showLoginModal}
         />
