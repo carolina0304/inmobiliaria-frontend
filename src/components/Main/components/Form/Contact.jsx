@@ -48,6 +48,7 @@ function Contact() {
 
       console.log("Email enviado:", result.text);
       setMessage("¡Mensaje enviado exitosamente!");
+      setShowSuccessPopup(true);
 
       // Limpiar el formulario
       setFormData({
