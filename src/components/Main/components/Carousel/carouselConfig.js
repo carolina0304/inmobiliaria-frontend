@@ -5,12 +5,12 @@ export const carouselConfig = {
   autoPlaySpeed: 3000,
   centerMode: false,
   className: "",
-  containerClass: "container-with-dots",
+  containerClass: "carousel-container",
   dotListClass: "",
   draggable: true,
   focusOnSelect: false,
   infinite: true,
-  itemClass: "",
+  itemClass: "carousel-item",
   keyBoardControl: true,
   minimumTouchDrag: 80,
   pauseOnHover: true,
@@ -24,7 +24,7 @@ export const carouselConfig = {
         min: 1024,
       },
       items: 3,
-      partialVisibilityGutter: 0,
+      partialVisibilityGutter: 40,
     },
     mobile: {
       breakpoint: {
@@ -32,7 +32,7 @@ export const carouselConfig = {
         min: 0,
       },
       items: 1,
-      partialVisibilityGutter: 0,
+      partialVisibilityGutter: 20,
     },
     tablet: {
       breakpoint: {
@@ -40,7 +40,7 @@ export const carouselConfig = {
         min: 464,
       },
       items: 2,
-      partialVisibilityGutter: 0,
+      partialVisibilityGutter: 30,
     },
   },
   rewind: false,

@@ -4,11 +4,6 @@ import React, { useState, useEffect } from "react";
 import "../../../../blocks/contact.css";
 
 function Contact() {
-  // Inicializar EmailJS cuando el componente se monta
-  //useEffect(() => {
-  //emailjs.init("ir3tuKUrVQzq3rox"); // Tu Public Key
-  //}, []);
-
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -123,10 +118,10 @@ function Contact() {
       </div>
       {showSuccessPopup && (
         <div
-          className="popup-overlay"
+          className="contact__popup-overlay"
           onClick={() => setShowSuccessPopup(false)}
         >
-          <div className="popup" onClick={(e) => e.stopPropagation()}>
+          <div className="contact__popup" onClick={(e) => e.stopPropagation()}>
             <h3>¡Mensaje enviado exitosamente! ✅</h3>
             <p>
               Gracias por contactarnos. Uno de nuestros asesores se pondrá en
@@ -134,7 +129,7 @@ function Contact() {
             </p>
             <button
               onClick={() => setShowSuccessPopup(false)}
-              className="popup-button"
+              className="contact__popup-button"
             >
               Entendido
             </button>

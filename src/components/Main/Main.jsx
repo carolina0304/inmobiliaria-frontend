@@ -71,20 +71,9 @@ function Main({ onImageClick }) {
       <div className="carousel">
         <Carousel {...carouselConfig}>
           {allProperties.map((property) => (
-            <PropertyCard
-              key={property.id}
-              property={property}
-              /*image={property.image}
-              headline={property.headline}*/
-              onImageClick={onImageClick}
-              /*description={property.description}
-              propertyKey={property.propertyKey}
-              bedrooms={property.bedrooms}
-              bathrooms={property.bathrooms}
-              area={property.area}
-              type={property.type}
-              price={property.price}*/
-            />
+            <div key={property.id} className="carousel-item">
+              <PropertyCard property={property} onImageClick={onImageClick} />
+            </div>
           ))}
         </Carousel>
       </div>

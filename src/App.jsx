@@ -25,8 +25,6 @@ import "../src/blocks/carousel.css";
 import "../src/blocks/properties.css";
 import "../src/blocks/login.css";
 
-/*import PropertyCard from "./components/Main/components/PropertyCard/PropertyCard.jsx";*/
-
 import Footer from "./components/Footer/Footer.jsx";
 
 function App() {
@@ -40,8 +38,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [userRole, setUserRole] = useState(null); // 'admin' o 'user'
-
-  /*const ADMIN_EMAILS = ["terraqro26@gmail.com"]; // Tus emails admin*/
 
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -74,11 +70,6 @@ function App() {
           setUserEmail(data.user.email);
           setUserId(data.user.id);
           setUserFavorites(data.user.favorites || []);
-          // Verificar si es admin por email
-          /*const isAdmin = ADMIN_EMAILS.includes(email.toLowerCase());
-          setUserRole(isAdmin ? "admin" : "user");
-          setShowLoginModal(false); // Cerrar modal al hacer login exitoso*/
-          // 🔥 USAR EL CAMPO isAdmin DE MockAPI
           setUserRole(data.user.isAdmin ? "admin" : "user");
           setShowLoginModal(false);
         }
@@ -193,18 +184,6 @@ function App() {
             }
           />
           <Route path="/contacto" element={<Contact />} />
-          {/* 🔐 RUTA DE LOGIN 
-          
-          <Route
-            path="/login"
-            element={
-              !isLoggedIn ? (
-                <Login onLogin={handleLogin} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />*/}
         </Routes>
         <Footer />
         <Login

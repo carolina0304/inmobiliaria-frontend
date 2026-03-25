@@ -6,10 +6,9 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
   cursor: pointer;
-  max-width: none;
   width: 100%;
   max-width: 340px;
-  margin: 0 auto;
+  margin: 0 auto; /* Centrar las tarjetas */
   display: flex;
   flex-direction: column;
 }
@@ -52,6 +51,7 @@
   overflow: hidden;
 
   min-height: 48px; /* fuerza misma altura */
+  text-align: center;
 }
 
 /* UBICACION */
@@ -123,10 +123,6 @@
   display: grid;
   place-items: center;
 
-  /*display: flex;
-  align-items: center;
-  justify-content: center;*/
-
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -183,15 +179,3 @@
     transform: scale(1);
   }
 }
-
-/*.property-card__heart.featured {
-  background: rgba(255, 182, 193, 0.9);
-}
-
-.property-card__heart.favorite {
-  color: #ff69b4; /* Rosa para favoritos 
-}
-
-.property-card__heart.featured {
-  color: #ff0000; /* Rojo para destacadas (admin) 
-}*/

@@ -103,6 +103,13 @@
   transform: translateY(-2px);
 }
 
+.login__switch {
+  font-family: "Montserrat";
+}
+.login__switch-btn {
+  font-family: "Montserrat";
+}
+
 /* RESPONSIVE */
 @media screen and (max-width: 1024px) {
   .login-modal {

@@ -1,91 +1,123 @@
-/* CONTENEDOR GENERAL */
+/* CONTENEDOR PRINCIPAL DEL CAROUSEL */
 .carousel {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
   position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 80px; /* Espacio para las flechas externas */
+}
+
+/* CONTENEDOR INTERNO - Las 3 tarjetas van aquí */
+.carousel .react-multi-carousel-list {
+  overflow: hidden;
   padding: 0;
 }
 
-/* CONTENEDOR INTERNO */
-.carousel .react-multi-carousel-list {
-  overflow: hidden;
-  padding: 0 20px;
-}
-
-/* TRACK DE LAS CARDS */
+/* TRACK DE LAS TARJETAS */
 .carousel .react-multi-carousel-track {
   display: flex;
   align-items: stretch;
 }
 
-/* ITEM DEL CAROUSEL */
+/* CADA ITEM DEL CAROUSEL */
 .carousel .react-multi-carousel-item {
-  /*display: flex;
-  justify-content: center;*/
-  padding: 0 12px;
+  padding: 0 15px; /* Espacio entre tarjetas */
   box-sizing: border-box;
 }
 
-/* FLECHAS */
+/* FLECHAS - POSICIONADAS AFUERA */
 .carousel .react-multi-carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  cursor: pointer;
   z-index: 10;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
 }
 
-.carousel:hover .react-multi-carousel-arrow {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .carousel .react-multi-carousel-arrow:hover {
-  opacity: 1;
-  background: #000;
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
 }
 
-/* IZQUIERDA */
+/* FLECHA IZQUIERDA - AFUERA DEL CONTENEDOR */
 .carousel .react-multi-carousel-arrow--left {
-  left: -25px;
-  transform: translateY(-50%);
+  left: -60px;
 }
 
-/* DERECHA */
+/* FLECHA DERECHA - AFUERA DEL CONTENEDOR */
 .carousel .react-multi-carousel-arrow--right {
-  right: -25px;
-  transform: translateY(-50%);
+  right: -60px;
+}
+
+/* ICONOS DE LAS FLECHAS */
+.carousel .react-multi-carousel-arrow::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.carousel .react-multi-carousel-arrow--left::before {
+  border-width: 8px 12px 8px 0;
+  border-color: transparent white transparent transparent;
+  margin-left: -2px;
+}
+
+.carousel .react-multi-carousel-arrow--right::before {
+  border-width: 8px 0 8px 12px;
+  border-color: transparent transparent transparent white;
+  margin-right: -2px;
 }
 
 /* RESPONSIVE */
-
 @media (max-width: 1024px) {
   .carousel {
     max-width: 900px;
+    padding: 0 60px;
+  }
+
+  .carousel .react-multi-carousel-arrow--left {
+    left: -50px;
+  }
+
+  .carousel .react-multi-carousel-arrow--right {
+    right: -50px;
   }
 }
 
 @media (max-width: 768px) {
   .carousel {
-    padding: 20px;
+    padding: 0 50px;
   }
 
   .carousel .react-multi-carousel-arrow {
     width: 40px;
     height: 40px;
   }
+
+  .carousel .react-multi-carousel-arrow--left {
+    left: -40px;
+  }
+
+  .carousel .react-multi-carousel-arrow--right {
+    right: -40px;
+  }
 }
 
 @media (max-width: 480px) {
+  .carousel {
+    padding: 0 20px;
+  }
+
   .carousel .react-multi-carousel-arrow {
-    display: none;
+    display: none; /* Ocultar flechas en móvil */
   }
 }

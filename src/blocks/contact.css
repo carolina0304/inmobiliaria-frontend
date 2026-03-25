@@ -58,30 +58,6 @@
   background: #2fcf90;
 }
 
-/* OVERLAY */
-.login-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* MODAL */
-.login-modal {
-  background: #fff;
-  padding: 40px 30px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 380px;
-  position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.3s ease;
-}
-
 /* ANIMACIÓN */
 @keyframes fadeIn {
   from {
@@ -95,7 +71,7 @@
 }
 
 /* Popup Overlay */
-.popup-overlay {
+.contact__popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -110,7 +86,7 @@
 }
 
 /* Popup Container */
-.popup {
+.contact__popup {
   background: white;
   padding: 40px;
   border-radius: 12px;
@@ -122,23 +98,25 @@
 }
 
 /* Popup Title */
-.popup h3 {
+.contact__popup h3 {
   color: #333;
   font-size: 24px;
   margin-bottom: 16px;
   font-weight: 600;
+  font-family: "Montserrat";
 }
 
 /* Popup Text */
-.popup p {
+.contact__popup p {
   color: #666;
   font-size: 16px;
   margin-bottom: 24px;
   line-height: 1.5;
+  font-family: "Montserrat";
 }
 
 /* Popup Button */
-.popup-button {
+.contact__popup-button {
   background: #00d4aa;
   color: white;
   border: none;
@@ -149,9 +127,10 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   min-width: 120px;
+  font-family: "Montserrat";
 }
 
-.popup-button:hover {
+.contact__popup-button:hover {
   background: #00b894;
 }
 
