@@ -1,16 +1,35 @@
-# React + Vite
+# Tripleten web_project_api_full
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto Final
+Inmobiliaria TerraQro
 
-Currently, two official plugins are available:
+Aplicacion web que permite a los uduarios explorar propiedades filtrarlas y guardarlas como favoritas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Incluyendo sistema de roles donde un administrador puede destacar, agregar y quitar propiedades.
 
-## React Compiler
+# Roles del usuario
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Usuario-puede explorar propiedades, guardar como favoritas y visualizar las propiedades.
+Administrador-Marcar y desmarcar propiedades destacadas , controla las propiedades que aparecen.
 
-## Expanding the ESLint configuration
+# Roles del usuario
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Para fines de demostracion
+
+Administrador
+
+Correo: terraqro26@gmail.com
+Contraseña: admin123
+
+# Tecnologias aplicadas
+
+Frontend, api rest, react, javascript, css responsivo
+
+# Github
+
+https://github.com/carolina0304/inmobiliaria-frontend
+
+# Author
+
+Arlene Carolina Gomez
+Proyecto final de TripleTen 🚀
