@@ -456,21 +456,6 @@ function Properties({
               <PropertyCard
                 key={property.id}
                 property={property}
-                /*image={property.image}
-                headline={property.headline}
-                onImageClick={onImageClick}
-                description={property.description}
-                propertyKey={property.propertyKey}
-                bedrooms={property.bedrooms}
-                bathrooms={property.bathrooms}
-                area={property.area}
-                type={property.type}
-                price={property.price}
-                isAdmin={isAdmin}
-                onDelete={() => handleDeleteProperty(property.id)}
-                onEdit={() => handleEditProperty(property.id)}
-                onToggleFeatured={() => handleToggleFeatured(property.id)}
-                isFeatured={property.isFeatured}*/
                 onImageClick={handleImageClick}
                 userRole={userRole}
                 user={
